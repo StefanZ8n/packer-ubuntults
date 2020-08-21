@@ -48,7 +48,7 @@ See the
 for details.
 
 - **"iso_url"**\
-  By default the .iso of Ubuntu LTS is pulled from Canonical server.\
+  By default the .iso of Ubuntu LTS is pulled a mirror close to me.\
   You can change the URL to one closer to your build server.
 
 ### How to use Packer
