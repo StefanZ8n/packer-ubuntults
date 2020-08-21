@@ -8,8 +8,8 @@
     "numsockets": "1",
     "numcores": "2",
     "vm_name": "UbuntuLTS",
-    "username": "ubuntu",
-    "password": "Passw0rd.",
+    "os_user": "ubuntu",
+    "os_password": "Passw0rd.",
     "esx_host": "buildesx1.lan.afno.de",
     "esx_user": "root",
     "esx_password": "Passw0rd."
@@ -49,8 +49,8 @@
         "resources/cloudinit"
       ],
       "communicator": "ssh",
-      "ssh_username": "{{user `username`}}",
-      "ssh_password": "{{user `password`}}",
+      "ssh_username": "{{user `os_user`}}",
+      "ssh_password": "{{user `os_password`}}",
       "ssh_clear_authorized_keys": true,
       "shutdown_command": "shutdown -P now",
       "shutdown_timeout": "5m"
