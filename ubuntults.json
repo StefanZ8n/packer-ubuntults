@@ -1,0 +1,63 @@
+{
+  "variables": {
+    "boot_wait": "5s",
+    "disk_size": "16384",
+    "iso_checksum": "file:http://releases.ubuntu.com/20.04/SHA256SUMS",
+    "iso_url": "http://releases.ubuntu.com/20.04/ubuntu-20.04.1-live-server-amd64.iso",
+    "memsize": "2048",
+    "numsockets": "1",
+    "numcores": "2",
+    "vm_name": "UbuntuLTS",
+    "username": "ubuntu",
+    "password": "Passw0rd.",
+    "esx_host": "buildesx1.lan.afno.de",
+    "esx_user": "root",
+    "esx_password": "Passw0rd."
+  },
+  "builders": [
+    {
+      "type": "vmware-iso",
+      "remote_type": "esx5",
+      "remote_host": "{{user `esx_host`}}",
+      "remote_username": "{{user `esx_user`}}",
+      "remote_password": "{{user `esx_password`}}",
+      "format": "ova",
+      "vnc_disable_password": true,
+      "http_directory": "http",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_url": "{{user `iso_url`}}",
+      "vm_name": "{{user `vm_name`}}",
+      "version": 14,
+      "guest_os_type": "ubuntu-64",
+      "cpus": "{{user `numsockets`}}",
+      "cores": "{{user `numcores`}}",
+      "memory": "{{user `memsize`}}",
+      "disk_adapter_type": "pvscsi",
+      "disk_size": "{{user `disk_size`}}",
+      "disk_type_id": "thin",
+      "network_adapter_type": "vmxnet3",
+      "network": "bridged",
+      "vmx_data": {
+        "ethernet0.networkName": "VM Network"
+      },
+      "boot_wait": "{{user `boot_wait`}}",
+      "boot_command" : [
+        "<esc><enter><f6><esc><wait> ",
+        "autoinstall ds=nocloud;seedfrom=file://",
+        "<wait>"
+      ],
+      "floppy_files": [
+        "resources/cloudinit"
+      ],
+      "communicator": "ssh",
+      "ssh_username": "{{user `username`}}",
+      "ssh_password": "{{user `password`}}",
+      "ssh_clear_authorized_keys": true,
+      "shutdown_command": "shutdown -P now",
+      "shutdown_timeout": "5m"
+    }
+  ],
+  "provisioners": [
+    
+  ]
+}
