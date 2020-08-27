@@ -16,7 +16,7 @@ packer:
   before_script:
     - 'Remove-Item -Path .\build\ -Recurse -Force; $exit_code = $?'
   script:
-    - "packer build -timestamp-ui -force -on-error=abort ubuntults.json"
+    - "packer build -timestamp-ui -force ubuntults.json"
     - '$ovf = Get-ChildItem .\build\*.ovf'
     - 'ovftool $($ovf.FullName) .\build\$($ovf.BaseName).ova'
   tags:
