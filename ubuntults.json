@@ -1,60 +1,85 @@
 {
   "variables": {
-    "boot_wait": "5s",
+    "boot_wait": "4s",
     "disk_size": "16384",
     "iso_checksum": "file:https://ftp.halifax.rwth-aachen.de/ubuntu-releases/20.04.1/SHA256SUMS",
     "iso_url": "https://ftp.halifax.rwth-aachen.de/ubuntu-releases/20.04.1/ubuntu-20.04.1-live-server-amd64.iso",
     "memsize": "2048",
     "numsockets": "1",
     "numcores": "2",
-    "vm_name": "UbuntuLTS",
+    "vm_name": "ubuntults",
     "os_user": "ubuntu",
     "os_password": "Passw0rd.",
+    "vcenter_server": "vcsa.lan.afno.de",
+    "vcenter_user": "build",
+    "vcenter_password": "Passw0rd.",
+    "vcenter_datacenter": "Build",
     "esx_host": "buildesx1.lan.afno.de",
     "esx_user": "root",
     "esx_password": "Passw0rd."
   },
   "builders": [
     {
-      "type": "vmware-iso",
-      "remote_type": "esx5",
-      "remote_host": "{{user `esx_host`}}",
-      "remote_username": "{{user `esx_user`}}",
-      "remote_password": "{{user `esx_password`}}",
-      "format": "ova",
-      "vnc_disable_password": true,
+      "type": "vsphere-iso",
+      "vcenter_server": "{{user `vcenter_server`}}",
+      "insecure_connection": true,
+      "datacenter": "{{user `vcenter_datacenter`}}",
+      "username": "{{user `vcenter_user`}}",
+      "password": "{{user `vcenter_password`}}",
+      "host": "{{user `esx_host`}}",
+      "vm_name": "{{user `vm_name`}}",
+      "CPUs": "{{user `numcores`}}",
+      "cpu_cores": "{{user `numcores`}}",
+      "RAM": "{{user `memsize`}}",
+      "firmware": "bios",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_url": "{{user `iso_url`}}",
-      "vm_name": "{{user `vm_name`}}",
-      "version": 14,
-      "guest_os_type": "ubuntu-64",
-      "cpus": "{{user `numsockets`}}",
-      "cores": "{{user `numcores`}}",
-      "memory": "{{user `memsize`}}",
-      "disk_adapter_type": "pvscsi",
-      "disk_size": "{{user `disk_size`}}",
-      "disk_type_id": "thin",
-      "network_adapter_type": "vmxnet3",
-      "network": "bridged",
-      "vmx_data": {
-        "ethernet0.networkName": "VM Network"
+      "vm_version": 14,
+      "guest_os_type": "ubuntu64Guest",
+      "disk_controller_type": "pvscsi",
+      "network_adapters": [
+        {
+          "network": "VM Network",
+          "network_card": "vmxnet3"
+        }
+      ],
+      "storage": [
+        {
+          "disk_size": "{{user `disk_size`}}",
+          "disk_thin_provisioned": true
+        }
+      ],
+      "export": {
+        "output_directory": "./build",
+        "force": true
       },
       "boot_wait": "{{user `boot_wait`}}",
       "boot_command": [
-        "<esc><enter><f6><esc><wait> ",
-        "autoinstall ds=nocloud;seedfrom=file://",
-        "<wait>"
+        "<esc><wait><esc><wait><f6><wait><esc><wait>",
+        "autoinstall",
+        "<wait><enter>"
       ],
+      "floppy_label": "CIDATA",
       "floppy_files": [
-        "resources/cloudinit"
+        "resources/cloudinit",
+        "resources/scripts"
       ],
       "communicator": "ssh",
       "ssh_username": "{{user `os_user`}}",
       "ssh_password": "{{user `os_password`}}",
       "ssh_clear_authorized_keys": true,
-      "shutdown_command": "shutdown -P now",
+      "shutdown_command": "echo '{{ user `os_password` }}' | sudo -S shutdown -P now",
       "shutdown_timeout": "5m"
     }
   ],
-  "provisioners": []
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": "echo '{{ user `os_password` }}' | sudo -S mount /dev/fd0 /mnt && sudo cp /mnt/post_install.sh /tmp && sudo chmod +x /tmp/post_install.sh"
+    },
+    {
+      "type": "shell",
+      "inline": "echo '{{ user `os_password` }}' | sudo -S /tmp/post_install.sh"
+    }
+  ]
 }

@@ -1,15 +1,19 @@
 #cloud-config
 autoinstall:
-    version: 1
-    refresh-installer:
-        update: yes
-    identity:
-        hostname: ubuntults
-        username: ubuntu
-        password: $6$1Mj8rGE7FsZVviBw$YuA7G0yHWX93y1qmyV./glO2wN8vG3AWA.qwmq6zGl2z95GUi4ICVeo6W0AQjTsIxTcaaIKkDmy5kfop203bc0
-    ssh:
-        allow-pw: true
-        authorized-keys: []
-        install-server: true
-    packages:
-        - tmux
+  version: 1
+  refresh-installer:
+    update: yes
+  identity:
+    hostname: ubuntults
+    username: ubuntu
+    password: $6$1Mj8rGE7FsZVviBw$YuA7G0yHWX93y1qmyV./glO2wN8vG3AWA.qwmq6zGl2z95GUi4ICVeo6W0AQjTsIxTcaaIKkDmy5kfop203bc0
+  ssh:
+    allow-pw: true
+    authorized-keys: []
+    install-server: true
+  packages:
+    - tmux
+    - open-vm-tools
+  early-commands:
+    - systemctl stop sshd
+    - systemctl disable sshd

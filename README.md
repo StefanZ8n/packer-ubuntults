@@ -73,12 +73,15 @@ The default credentials for this VM image are:
 
 ## Implementation Details
 
-- nothing yet
+- The installer enables SSH but packer is not able to log in with the guest
+  credentials, that's why I disable the SSH daemon in the `early-commands` in
+  the cloud-init install script.
 
 ## Resources
 
 - [Packer build config for Ubuntu server: subiquity vs debian-installer](https://imagineer.in/blog/packer-build-for-ubuntu-20-04/)
 - [Ubuntu Autoinstall Reference](https://ubuntu.com/server/docs/install/autoinstall-reference)
+- [CloudInit Documentation](https://cloudinit.readthedocs.io/en/latest/topics/datasources/nocloud.html)
 
 ## Gitlab-CI Build
 

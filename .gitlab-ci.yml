@@ -14,9 +14,11 @@ workflow:
 packer:
   stage: build
   before_script:
-    - 'Remove-Item -Path .\output-vmware-iso\ -Recurse -Force; $exit_code = $?'
+    - 'Remove-Item -Path .\build\ -Recurse -Force; $exit_code = $?'
   script:
-    - "packer build ubuntults.json"
+    - "packer build -timestamp-ui -force -on-error=abort ubuntults.json"
+    - '$ovf = Get-ChildItem .\build\*.ovf'
+    - 'ovftool $($ovf.FullName) .\build\$($ovf.BaseName).ova'
   tags:
     - packer
     - windows
@@ -26,15 +28,15 @@ packer:
       - packer_cache/
   artifacts:
     paths:
-      - "output-vmware-iso/"
+      - "build/*.ova"
     expire_in: 1 hours
   rules:
-    - when: always
+    - when: on_success
 
 copytosmb:
   stage: deploy
   script:
-    - 'Move-Item -Path .\output-vmware-iso\*.ova -Destination
+    - 'Move-Item -Path .\build\*.ova -Destination
       $SMB_PATH\UBUNTULTS-$LATEST_TAG-$(Get-Date -Format
       "yyMMdd")-$CI_PIPELINE_IID.ova'
   tags:
