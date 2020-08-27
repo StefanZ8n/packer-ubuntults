@@ -2,6 +2,8 @@
 packer_cache/
 output-virtualbox-iso/
 output-vmware-iso/
+output-vsphere-iso/
+build/
 
 # For built boxes
 *.box
