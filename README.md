@@ -2,18 +2,16 @@
 
 ## What is this project about?
 
-`ubuntults` is a set of configuration files used to build automated Ubuntu LTS
-virtual machine images using [Packer](https://www.packer.io/). This Packer
-configuration file allows you to OVA images usable for VMware and VirtualBox on
-a vSphere ESX host.
+`ubuntults` is a set of configuration files used to build automated Ubuntu LTS virtual machine
+images using [Packer](https://www.packer.io/). This Packer configuration file allows you to OVA
+images usable for VMware and VirtualBox on a vSphere ESX host.
 
 ## Prerequisites
 
 - [Packer](https://www.packer.io/downloads.html) to run the build process
-- [VMware ESXI](https://www.vmware.com/de/products/esxi-and-esx.html) to build
-  on
-- [VMware OVF Tool](https://www.vmware.com/support/developer/ovf/) to create the
-  OVA from the generated VM
+- [VMware ESXI](https://www.vmware.com/de/products/esxi-and-esx.html) to build on
+- [VMware OVF Tool](https://www.vmware.com/support/developer/ovf/) to create the OVA from the
+  generated VM
 
 ## Build process
 
@@ -34,14 +32,13 @@ a vSphere ESX host.
 ### Prepare Build Host
 
 - Install Packer
-- Install VMware OVA Tool and add the installation path to `%PATH%` to find
-  `ovftool`
+- Install VMware OVA Tool and add the installation path to `%PATH%` to find `ovftool`
 
 ### Configure Build Variables
 
-There are some variables which can or must be changed before building at the top
-of the `ubuntults.json` file. You can overwrite these variables in the file, in
-a variable file or via commandline.
+There are some variables which can or must be changed before building at the top of the
+`ubuntults.json` file. You can overwrite these variables in the file, in a variable file or via
+commandline.
 
 See the
 [Packer documentation on user variables](https://www.packer.io/docs/templates/user-variables.html)
@@ -60,8 +57,7 @@ cd <path-to-git-root-directory>
 packer build ubuntults.json
 ```
 
-Wait for the build to finish to find the generated OVA file in the
-`output-vmware-iso` folder.
+Wait for the build to finish to find the generated OVA file in the `output-vmware-iso` folder.
 
 ## Default credentials
 
@@ -70,12 +66,12 @@ The default credentials for this VM image are:
 | Username | Password    |
 | -------- | ----------- |
 | `ubuntu` | `Passw0rd.` |
+| `root`   | `Passw0rd.` |
 
 ## Implementation Details
 
-- The installer enables SSH but packer is not able to log in with the guest
-  credentials, that's why I disable the SSH daemon in the `early-commands` in
-  the cloud-init install script.
+- The installer enables SSH but packer is not able to log in with the guest credentials, that's why
+  I disable the SSH daemon in the `early-commands` in the cloud-init install script.
 
 ## Resources
 
@@ -87,5 +83,5 @@ The default credentials for this VM image are:
 
 The following variables have to be set in the Gitlab UI
 
-| `SMB_PATH` | The UNC path to the SMB share where to put the resulting OVA
-file - the user running Gitlab-Runner must have write access |
+| `SMB_PATH` | The UNC path to the SMB share where to put the resulting OVA file - the user running
+Gitlab-Runner must have write access |

@@ -10,6 +10,9 @@ apt update
 apt upgrade -y
 apt autoremove -y
 
+# Set root password
+echo -e "Passw0rd.\nPassw0rd." | passwd
+
 # Cleanups
 
 # From: https://jimangel.io/post/create-a-vm-template-ubuntu-18.04/
