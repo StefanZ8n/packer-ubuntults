@@ -67,6 +67,7 @@
       "communicator": "ssh",
       "ssh_username": "{{user `os_user`}}",
       "ssh_password": "{{user `os_password`}}",
+      "ssh_timeout": "1h",
       "ssh_clear_authorized_keys": true,
       "shutdown_command": "echo '{{ user `os_password` }}' | sudo -S shutdown -P now",
       "shutdown_timeout": "5m"
