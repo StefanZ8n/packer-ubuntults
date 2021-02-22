@@ -1,2 +1,7 @@
+v1.1.0 - 22.02.2021
+* Updated to LTS 20.04.2 ISO
+* Increased SSH timeout for automatic updates
+* Configured a root password
+
 v1.0.0 - 27.08.2020
 * Initial version building a Ubuntu LTS 20.04 OVA
