@@ -1,3 +1,7 @@
+v1.1.1 - ??.03.2021
+- Clearing machine-id for proper DHCP leases
+
+
 v1.1.0 - 22.02.2021
 * Updated to LTS 20.04.2 ISO
 * Increased SSH timeout for automatic updates

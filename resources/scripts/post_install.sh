@@ -75,6 +75,10 @@ apt clean
 # cleans out all of the cloud-init cache / logs - this is mainly cleaning out networking info
 sudo cloud-init clean --logs
 
+# Clear current machine-id which is also used by systemd-network to get DHCP leases
+echo > /etc/machine-id
+echo > /var/lib/dbus-machine-id
+
 #cleanup shell history
 cat /dev/null > ~/.bash_history && history -c
 history -w
