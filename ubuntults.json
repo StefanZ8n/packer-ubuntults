@@ -2,8 +2,8 @@
   "variables": {
     "boot_wait": "4s",
     "disk_size": "16384",
-    "iso_checksum": "file:https://ftp.halifax.rwth-aachen.de/ubuntu-releases/focal/SHA256SUMS",
-    "iso_url": "https://ftp.halifax.rwth-aachen.de/ubuntu-releases/focal/ubuntu-20.04.2-live-server-amd64.iso",
+    "iso_checksum": "file:https://releases.ubuntu.com/20.04/SHA256SUMS",
+    "iso_url": "https://releases.ubuntu.com/20.04/ubuntu-20.04.2-live-server-amd64.iso",
     "memsize": "2048",
     "numsockets": "1",
     "numcores": "2",
