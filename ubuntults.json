@@ -1,6 +1,6 @@
 {
   "variables": {
-    "boot_wait": "3s",
+    "boot_wait": "4s",
     "disk_size": "16384",
     "iso_checksum": "file:https://releases.ubuntu.com/20.04/SHA256SUMS",
     "iso_url": "https://releases.ubuntu.com/20.04/ubuntu-20.04.2-live-server-amd64.iso",
@@ -55,9 +55,9 @@
       },
       "boot_wait": "{{user `boot_wait`}}",
       "boot_command": [
-        "<esc><wait><esc><wait><f6><wait><esc><wait>",
+        "<enter><enter><f6><esc><wait>",
         "autoinstall",
-        "<wait><enter>"
+        "<enter><wait>"
       ],
       "floppy_label": "CIDATA",
       "floppy_files": [
