@@ -1,6 +1,8 @@
+v1.1.2 - 20.05.2021
+- Fixing an issue when `apt update` failed because of required interactive input
+
 v1.1.1 - 18.04.2021
 - Clearing machine-id for proper DHCP leases
-
 
 v1.1.0 - 22.02.2021
 * Updated to LTS 20.04.2 ISO
