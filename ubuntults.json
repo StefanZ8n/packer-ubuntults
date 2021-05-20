@@ -1,6 +1,6 @@
 {
   "variables": {
-    "boot_wait": "4s",
+    "boot_wait": "5s",
     "disk_size": "16384",
     "iso_checksum": "file:https://releases.ubuntu.com/20.04/SHA256SUMS",
     "iso_url": "https://releases.ubuntu.com/20.04/ubuntu-20.04.2-live-server-amd64.iso",

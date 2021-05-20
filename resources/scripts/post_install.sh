@@ -2,13 +2,16 @@
 # This script will be called after the first reboot of the VM and before taking the OVA image.
 # It is placed in /tmp and run as root.
 
+# Force any questions to be answered with defaults, see `man 7 debconf`
+export DEBIAN_FRONTEND=noninteractive
+
 # Disable Cloud-Init
 touch /etc/cloud/cloud-init.disabled
 
 # APT Updates
-apt update 
-apt upgrade -y
-apt autoremove -y
+apt-get update 
+apt-get upgrade -y
+apt-get autoremove -y
 
 # Set root password
 echo -e "Passw0rd.\nPassw0rd." | passwd
@@ -17,7 +20,7 @@ echo -e "Passw0rd.\nPassw0rd." | passwd
 
 # From: https://jimangel.io/post/create-a-vm-template-ubuntu-18.04/
 #Stop services for cleanup
-sudo service rsyslog stop
+service rsyslog stop
 
 #clear audit logs
 if [ -f /var/log/wtmp ]; then
@@ -66,7 +69,7 @@ truncate -s0 /etc/hostname
 hostnamectl set-hostname localhost
 
 #cleanup apt
-apt clean
+apt-get clean && apt-get autoclean
 
 # set dhcp to use mac - this is a little bit of a hack but I need this to be placed under the active nic settings
 # also look in /etc/netplan for other config files
