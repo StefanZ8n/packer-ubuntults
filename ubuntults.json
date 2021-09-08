@@ -3,7 +3,7 @@
     "boot_wait": "5s",
     "disk_size": "16384",
     "iso_checksum": "file:https://releases.ubuntu.com/20.04/SHA256SUMS",
-    "iso_url": "https://releases.ubuntu.com/20.04/ubuntu-20.04.2-live-server-amd64.iso",
+    "iso_url": "https://releases.ubuntu.com/20.04/ubuntu-20.04.3-live-server-amd64.iso",
     "memsize": "2048",
     "numsockets": "1",
     "numcores": "2",
@@ -34,7 +34,7 @@
       "firmware": "bios",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_url": "{{user `iso_url`}}",
-      "vm_version": 14,
+      "vm_version": 19,
       "guest_os_type": "ubuntu64Guest",
       "disk_controller_type": "pvscsi",
       "network_adapters": [
