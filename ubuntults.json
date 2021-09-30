@@ -14,7 +14,7 @@
     "vcenter_user": "build",
     "vcenter_password": "Passw0rd.",
     "vcenter_datacenter": "Build",
-    "esx_host": "buildesx1.lan.afno.de",
+    "esx_host": "buildesx.lan.afno.de",
     "esx_user": "root",
     "esx_password": "Passw0rd."
   },
