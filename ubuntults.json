@@ -34,7 +34,7 @@
       "firmware": "bios",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_url": "{{user `iso_url`}}",
-      "vm_version": 19,
+      "vm_version": 14,
       "guest_os_type": "ubuntu64Guest",
       "disk_controller_type": "pvscsi",
       "network_adapters": [
