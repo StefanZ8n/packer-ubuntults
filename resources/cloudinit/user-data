@@ -15,5 +15,6 @@ autoinstall:
     - tmux
     - open-vm-tools
   early-commands:
+    # Disable SSH in the installer to avoid packer connecting to it
     - systemctl stop sshd
     - systemctl disable sshd
