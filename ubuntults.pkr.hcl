@@ -55,13 +55,13 @@ variable "http_ip" {
 
 variable "iso_checksum" {
   type    = string
-  default = "file:https://releases.ubuntu.com/focal/SHA256SUMS"
+  default = "file:https://releases.ubuntu.com/22.04.1/SHA256SUMS"
   description = "The checksum for the ISO specified in `iso_url`"
 }
 
 variable "iso_url" {
   type    = string
-  default = "https://releases.ubuntu.com/20.04.5/ubuntu-20.04.5-live-server-amd64.iso"
+  default = "https://releases.ubuntu.com/22.04.1/ubuntu-22.04.1-live-server-amd64.iso"
   description = "The download url for the installation ISO"
 }
 
@@ -109,7 +109,7 @@ variable "os_user" {
 
 variable "vm_name" {
   type    = string
-  default = "ubuntu2004"
+  default = "ubuntu2204"
   description = "The name of the VM when building"
 }
 
@@ -140,9 +140,13 @@ source "vsphere-iso" "ubuntults" {
   CPUs                 = "${var.numcores}"
   RAM                  = "${var.memsize}"
 
-  boot_command = [  "<esc><esc><f6><esc><wait>",
-                    "autoinstall ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/cloudinit/ fsck.mode=skip",
-                    "<enter><wait>"
+  boot_command = [  "c<wait>",
+                    "linux /casper/vmlinuz --- autoinstall ds=\"nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/cloudinit/\"",
+                    "<enter><wait>",
+                    "initrd /casper/initrd",                    
+                    "<enter><wait>",
+                    "boot",
+                    "<enter>"                    
                   ]
 
   boot_wait            = "${var.boot_wait}"
