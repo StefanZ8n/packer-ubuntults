@@ -14,6 +14,7 @@ This Packer configuration file allows you to OVA images usable for VMware and Vi
 ## Build process
 
 - Unattended installation of Ubuntu LTS server from downloaded ISO
+- Some cleanup via `post_install.sh` script
 - Export VM and package as OVA file
 
 ## HowTo
@@ -25,22 +26,29 @@ This Packer configuration file allows you to OVA images usable for VMware and Vi
 
 #### Configure Build Variables
 
-There are some variables which can or must be changed before building at the top of the `.pkr.hcl` file. 
-You can overwrite these variables in the file, in a variable file or via commandline.
+The variables required for the build are defined in the `variables.pkr.hcl` file.
+The definition contains also default values to build the latest LTS release.
+You can and must overwrite these variables in the file, in a variable file or via commandline.
 
 See the [Packer documentation on user variables](https://www.packer.io/docs/templates/user-variables.html) for details.
 
-- **"iso_url"**\
-  By default the .iso of Ubuntu LTS is pulled a mirror close to me.\
-  You can change the URL to one closer to your build server.
-
 #### How to use Packer
 
-To create a VM image using a vSphere ESX host:
+To create a VM image using a vCenter connection when you set your environment:
 
 ```sh
+# Set all the required packer variables for the vSphere connection, e.g. for Windows:
+$env:PKR_VAR_vcenter_server="vcenter.domain.name"
+$env:PKR_VAR_vcenter_user="build"
+$env:PKR_VAR_vcenter_password="Passw0rd."
+$env:PKR_VAR_vcenter_datacenter="Build"
+$env:PKR_VAR_esx_host="esx.domain.name"
+# IP Adress of the interface with default route
+$env:PKR_VAR_http_ip=(Get-NetIPAddress -AddressFamily IPv4 -ifIndex (Get-NetRoute -DestinationPrefix 0.0.0.0/0).ifIndex).IPAddress 
+
 cd <path-to-git-root-directory>
-packer build .
+# Define var file as required. If not set the latest LTS release will be build
+packer build -var-file="ubuntults2204.pkrvars.hcl" .
 ```
 
 Wait for the build to finish to find the generated OVA file in the `build/` folder.
@@ -62,6 +70,6 @@ The default credentials for this VM image are:
 
 ## Gitlab-CI Build
 
-The following variables have to be set in the Gitlab UI
+The Gitlab-CI build copies the resulting OVA to a SMB share for further usage. The following variables have to be set in the Gitlab UI
 
 | `SMB_PATH` | The UNC path to the SMB share where to put the resulting OVA file - the user running Gitlab-Runner must have write access |
