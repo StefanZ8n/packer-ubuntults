@@ -3,7 +3,9 @@ stages:
   - deploy
 
 variables:
-  LTS_VERSION: "2204"
+  LTS_VERSION: 
+    value: "2204"
+    description: "LTS version to build in form like '2204' for Ubuntu LTS 22.04"
 
 before_script:
   - "$LATEST_TAG=$(git describe --abbrev=0)"
