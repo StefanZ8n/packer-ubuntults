@@ -2,10 +2,15 @@ stages:
   - build
   - deploy
 
+variables:
+  LTS_VERSION: 
+    value: "2204"
+    description: "LTS version to build in form like '2204' for Ubuntu LTS 22.04"
+
 before_script:
   - "$LATEST_TAG=$(git describe --abbrev=0)"
-  - '$BUILD_NAME="UBUNTU2004-$LATEST_TAG-$(Get-Date -Format yyMMdd)-$CI_PIPELINE_IID"'
-  - '$PKR_VAR_vm_notes="$BUILD_NAME by Stefan Zimmermann"'
+  - '$BUILD_NAME="UBUNTULTS$LTS_VERSION-$LATEST_TAG-$(Get-Date -Format yyMMdd)-$CI_PIPELINE_IID"'
+  - '$env:PKR_VAR_vm_notes="$BUILD_NAME by Stefan Zimmermann"'
 
 workflow:
   rules:
@@ -19,7 +24,7 @@ packer:
     - 'Remove-Item -Path .\build\ -Recurse -Force; $exit_code = $?'
   script:
     - "packer init -upgrade ."
-    - "packer build -timestamp-ui -force ."
+    - "packer build -timestamp-ui -var-file ubuntults$LTS_VERSION.pkrvars.hcl -force ."
     - 'tar -C build/ -cvf build/$($BUILD_NAME).ova *.mf *.ovf *.vmdk'
   tags:
     - packer
