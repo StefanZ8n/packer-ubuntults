@@ -72,4 +72,5 @@ The default credentials for this VM image are:
 
 The Gitlab-CI build copies the resulting OVA to a SMB share for further usage. The following variables have to be set in the Gitlab UI
 
+| `LTS_VERSION` | LTS version to build in form like '2204' for Ubuntu LTS 22.04 |
 | `SMB_PATH` | The UNC path to the SMB share where to put the resulting OVA file - the user running Gitlab-Runner must have write access |
