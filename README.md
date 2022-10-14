@@ -2,14 +2,14 @@
 
 ## What is this project about?
 
-`ubuntults` is a set of configuration files used to build automated Ubuntu LTS virtual machine images using [Packer](https://www.packer.io/). 
+`ubuntults` is a set of configuration files used to build automated Ubuntu LTS virtual machine images using [Packer](https://www.packer.io/).
 This Packer configuration file allows you to OVA images usable for VMware and VirtualBox on a vSphere ESX host.
 
 ## Prerequisites
 
-* [Packer](https://www.packer.io/downloads) to run the build process
-* [VMware vCenter](https://www.vmware.com/products/vcenter-server.html) and [VMware ESXI](https://www.vmware.com/products/esxi-and-esx.html) to build on
-* `tar` for building an OVA from the export OVF files
+- [Packer](https://www.packer.io/downloads) to run the build process
+- [VMware vCenter](https://www.vmware.com/products/vcenter-server.html) and [VMware ESXI](https://www.vmware.com/products/esxi-and-esx.html) to build on
+- `tar` for building an OVA from the export OVF files
 
 ## Build process
 
@@ -44,7 +44,7 @@ $env:PKR_VAR_vcenter_password="Passw0rd."
 $env:PKR_VAR_vcenter_datacenter="Build"
 $env:PKR_VAR_esx_host="esx.domain.name"
 # IP Adress of the interface with default route
-$env:PKR_VAR_http_ip=(Get-NetIPAddress -AddressFamily IPv4 -ifIndex (Get-NetRoute -DestinationPrefix 0.0.0.0/0).ifIndex).IPAddress 
+$env:PKR_VAR_http_ip=(Get-NetIPAddress -AddressFamily IPv4 -ifIndex (Get-NetRoute -DestinationPrefix 0.0.0.0/0).ifIndex).IPAddress
 
 cd <path-to-git-root-directory>
 # Define var file as required. If not set the latest LTS release will be build
@@ -72,5 +72,7 @@ The default credentials for this VM image are:
 
 The Gitlab-CI build copies the resulting OVA to a SMB share for further usage. The following variables have to be set in the Gitlab UI
 
-| `LTS_VERSION` | LTS version to build in form like '2204' for Ubuntu LTS 22.04 |
-| `SMB_PATH` | The UNC path to the SMB share where to put the resulting OVA file - the user running Gitlab-Runner must have write access |
+| Variable      | Description                                                                                                               |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `LTS_VERSION` | LTS version to build in form like '2204' for Ubuntu LTS 22.04                                                             |
+| `SMB_PATH`    | The UNC path to the SMB share where to put the resulting OVA file - the user running Gitlab-Runner must have write access |
