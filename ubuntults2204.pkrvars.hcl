@@ -1,5 +1,5 @@
 iso_checksum = "file:https://releases.ubuntu.com/jammy/SHA256SUMS"
-iso_url = "https://releases.ubuntu.com/jammy/ubuntu-22.04.1-live-server-amd64.iso"
+iso_url = "http://releases.ubuntu.com/jammy/ubuntu-22.04.2-live-server-amd64.iso"
 vm_name = "ubuntults2204"
 boot_command = [  
                     "c<wait>",
