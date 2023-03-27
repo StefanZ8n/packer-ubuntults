@@ -1,4 +1,7 @@
 # Changelog
+v2.0.1 - 27.03.2023
+* Using latest HWE versions 20.04.6 and 22.04.2
+  
 v2.0.0 - 09.09.2022
 + Added support for building Ubuntu LTS 22.04 based on 22.04.1 ISO
 * Change structure of build files to easily build multiple LTS releases
